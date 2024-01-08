@@ -17,7 +17,7 @@
   </template>
   
   <script>
-  import { products } from '../../data-seed';
+  import axios from 'axios';
   import NotFound from '../errors/NotFound.vue';
   export default {
     components: {
@@ -25,17 +25,13 @@
     },
   data() {
     return {
-      products
+      product: {}
     }
   },
-  computed: {
-    product() {
-      return this.products.find(product => product.id === this.$route.params.id)
-
-    }
-  },
-  mounted() {
-    console.log(this.product)
+   async created() {
+    const code = this.$route.params.id
+    const result = await axios.get(`http://localhost:3000/api/${code}`)
+    this.product = result.data
   }
   }
   </script>
