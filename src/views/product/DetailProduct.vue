@@ -1,6 +1,7 @@
 <template>
     <div>
       <div id="page-wrap" v-if="product">
+        <h4 v-if="notif" class="notif">Items Added Succesfully</h4>
         <div id="img-wrap">
           <img :src="product.imageUrl" :alt="product.name">
         </div>
@@ -8,7 +9,7 @@
           <h1>{{ product.name }}</h1>
           <h3 id="price">Rp. {{ product.price }}</h3>
           <p>Average rating: {{ product.averageRating }}</p>
-          <button id="add-to-cart">Add To Cart</button>
+          <button id="add-to-cart" @click="addToCart(product.code)">Add To Cart</button>
           <p>{{ product.description }}</p>
         </div>
       </div>
@@ -25,7 +26,14 @@
     },
   data() {
     return {
-      product: {}
+      product: {},
+      notif: false
+    }
+  },
+  methods:{
+    async addToCart(product){
+      await axios.post('http://localhost:3000/api/orders/update/user/1', {product: product})  
+      this.notif = true
     }
   },
    async created() {

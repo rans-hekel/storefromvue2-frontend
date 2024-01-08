@@ -3,9 +3,9 @@
           <img :src="item.imageUrl" alt="" class="product-image">
           <div class="details-wrap">
             <h3>{{ item.name }}</h3>
-            <p>Rp{{ item.price }}</p>
+            <p>Rp{{ item.price }}.000</p>
           </div>
-          <button class="remove-button">Remove</button>
+          <button class="remove-button" @click="$emit('remove-item', item.code)">Remove</button>
         </div>
 </template>
 
